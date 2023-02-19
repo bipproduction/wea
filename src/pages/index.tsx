@@ -79,29 +79,29 @@ const LayoutWea = () => {
   return (
     <>
       <Stack spacing={"lg"}>
-        <Container p={"xs"} maw={720} miw={360}>
+        <Box  maw={720} miw={360}>
           <Stack spacing={"lg"}>
-            <Box bg={"gray"}>
+            <Box bg={"green"}>
               <Center h={200}>
                 <Stack spacing={0} justify={"center"} align={"center"}>
-                  <IconPhoneCall size={96} color={"orange"} />
+                  <IconPhoneCall size={96} color={"white"} />
                   <Text color={"white"} size={12}> 089697338821</Text>
                   <Text color={"white"} size={12} >kurosakiblackangel@gmail.com</Text>
                 </Stack>
               </Center>
             </Box>
-            <SimpleGrid cols={listPid.length - 1}>
+            <SimpleGrid cols={listPid.length - 1} p={"xs"}>
               {listPid.map((v) => (
                 <Box key={v.pid}>
                   <Paper shadow={"xs"}>
-                    <Box h={100} bg={"gray"}>
+                    <Box h={100} bg={"green"}>
                       <Center h={100}>
-                        <v.icon size={64} color={"cyan"} />
+                        <v.icon size={64} color={"white"} />
                       </Center>
                     </Box>
                     <Box p={"xs"}>
                       <Text>{_.upperCase(v.pid)}</Text>
-                      <Text size={12} c={"gray"}>
+                      <Text size={12} c={"gray"} lineClamp={3}>
                         {v.sub}
                       </Text>
                     </Box>
@@ -115,7 +115,7 @@ const LayoutWea = () => {
               ))}
             </SimpleGrid>
           </Stack>
-        </Container>
+        </Box>
       </Stack>
       {/* <Stack>
         {userId.value && <Text>${userId.value}</Text>}

@@ -1,9 +1,12 @@
 import { Text } from "@mantine/core";
+import ContainerLayout from "./container_layout";
 
 const InputNomer = () => {
   return (
     <>
-      <Text>Input Nomer</Text>
+      <ContainerLayout>
+        <Text>Comming Soon ...</Text>
+      </ContainerLayout>
     </>
   );
 };

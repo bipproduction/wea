@@ -10,6 +10,7 @@ import {
   CopyButton,
   Divider,
   Flex,
+  Grid,
   Group,
   Paper,
   ScrollArea,
@@ -81,7 +82,7 @@ const AcakNomer = () => {
   };
 
   const onGenerate = () => {
-    const lengNumber = 50;
+    const lengNumber = 30;
     const num = lastNumber.value ?? "082191119960";
     let realNum = Number(num.substring(1, num.length));
     const hasil = [];
@@ -111,7 +112,7 @@ const AcakNomer = () => {
         return false;
       }
 
-      toast.success("status ready");
+      // toast.success("status ready");
       return true;
     } else {
       toast.error(`${res.status}`);
@@ -263,9 +264,9 @@ const AcakNomer = () => {
                 </Stack>
               </Group>
 
-              <Paper p={"xs"} withBorder>
+              <Paper withBorder>
                 <ScrollArea h={200} scrollbarSize={0}>
-                  <SimpleGrid cols={3}>
+                  <Flex wrap={"wrap"}>
                     {listnumber.value &&
                       listnumber.value.map((v, i) => (
                         <Box key={v.toString()}>
@@ -274,17 +275,16 @@ const AcakNomer = () => {
                             .includes(v) ? (
                             <Tooltip label={"click to view number"}>
                               <Badge
+                                variant="outline"
                                 leftSection={
                                   <Avatar radius={50}>{i + 1}</Avatar>
                                 }
-                                variant="outline"
-                                color={"white"}
                               >
                                 <Anchor
                                   href={`https://wa.me/62${v}`}
                                   target={"_blank"}
                                 >
-                                  0{v}
+                                  <Text>0{v}</Text>
                                 </Anchor>
                               </Badge>
                             </Tooltip>
@@ -294,29 +294,31 @@ const AcakNomer = () => {
                               variant="light"
                               bg={"white"}
                             >
-                              <Text>0{v}</Text>
+                              <Text c={"gray"}>0{v}</Text>
                             </Badge>
                           )}
                         </Box>
                       ))}
-                  </SimpleGrid>
+                  </Flex>
                 </ScrollArea>
               </Paper>
               <Flex p={"xs"} pt={"lg"}>
                 <MdInfo size={32} color={"gray"} />
                 <Text size={12} c={"gray"} px={"xs"}>
                   click nomer yang berwarna biru untu melihat detail nomer,
-                  hasil Dari generate Nomer, maksimal hanya 50 , jika ingin
+                  hasil Dari generate Nomer, maksimal hanya 30 , jika ingin
                   lebih , hubungi developer
                 </Text>
               </Flex>
               {listResult.value && !_.isEmpty(listResult.value) && (
-                <Box p={"xs"}>
-                  <Group position="apart">
+                <Box p={"xs"} bg={"gray.1"}>
+                  <Flex justify={"space-between"} align={"start"}>
                     <Stack spacing={0}>
-                      <Title order={3} color={"cyan"}>
-                        Get Result : {listResult.value.length} Number
-                      </Title>
+                      <Avatar color={"green"}>
+                        <Text size={36} fw={"bold"} color={"cyan"}>
+                          {listResult.value.length}
+                        </Text>
+                      </Avatar>
                       <Text size={12} color={"gray"}>
                         Total Nomor Yang Berhasil Tervalidasi
                       </Text>
@@ -329,7 +331,7 @@ const AcakNomer = () => {
                       {({ copied, copy }) => (
                         <Button
                           variant="light"
-                          bg={"gray.0"}
+                          bg={"gray.1"}
                           color={copied ? "gray" : "blue"}
                           onClick={copy}
                         >
@@ -339,7 +341,7 @@ const AcakNomer = () => {
                         </Button>
                       )}
                     </CopyButton>
-                  </Group>
+                  </Flex>
                 </Box>
               )}
             </Stack>
@@ -347,7 +349,7 @@ const AcakNomer = () => {
 
           <Paper p={"xs"} bg={"gray.0"} shadow={"xs"}>
             <Stack spacing={"lg"}>
-              <Group position="apart" p={"xs"}>
+              <Flex>
                 <Stack spacing={0}>
                   <Title order={3}>Saved Number</Title>
                   <Text size={12} color={"gray"}>
@@ -380,10 +382,10 @@ const AcakNomer = () => {
                     )}
                   </CopyButton>
                 )}
-              </Group>
-              <Paper p={"xs"}>
+              </Flex>
+              <Paper>
                 <ScrollArea h={200} scrollbarSize={0}>
-                  <SimpleGrid cols={3}>
+                  <Flex wrap={"wrap"}>
                     {userListNumber.value &&
                       userListNumber.value.map((v: any, i) => (
                         <Box key={v.id}>
@@ -401,7 +403,7 @@ const AcakNomer = () => {
                           </Badge>
                         </Box>
                       ))}
-                  </SimpleGrid>
+                  </Flex>
                 </ScrollArea>
               </Paper>
               <Flex align={"center"}>
