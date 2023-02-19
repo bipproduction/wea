@@ -1,9 +1,57 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "@next/font/google";
+import styles from "@/styles/Home.module.css";
+import {
+  ActionIcon,
+  Anchor,
+  Box,
+  Button,
+  Card,
+  Center,
+  Container,
+  CopyButton,
+  Group,
+  List,
+  Navbar,
+  NavLink,
+  Paper,
+  ScrollArea,
+  SimpleGrid,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+  Tooltip,
+} from "@mantine/core";
+import { useShallowEffect } from "@mantine/hooks";
+import GStatict from "gStatict";
+import { useState } from "react";
+import { io } from "socket.io-client";
+import { useHookstate } from "@hookstate/core";
+import { cleanNotifications, showNotification } from "@mantine/notifications";
+import {
+  gIsSocketConnected,
+  gIsWaConnected,
+  gIsweaConnectLoading,
+  gIsWeaInit,
+  gListResult,
+  gUserId,
+} from "func/g-state";
+import { gFuncinitWea } from "func/init_wea";
+import { funcSendWa } from "func/func_send_wa";
+import $ from "jquery";
+import { useCustomEventListener } from "react-custom-events";
+import { IconCheck, IconPhoneCall, IconX } from "@tabler/icons";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import { gSelectedTab } from "@/g_state/g.state";
+import ContainerLayout from "@/lib/container_layout";
+import { listPid } from "@/util/list_pid";
+import _ from "lodash";
+import { MdArrowForwardIos, MdSkipNext } from "react-icons/md";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
@@ -14,110 +62,270 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>src/pages/index.tsx</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
-          </div>
-        </div>
-
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
-          </div>
-        </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
-        </div>
+      <main>
+        <LayoutWea />
       </main>
     </>
-  )
+  );
+}
+
+const LayoutWea = () => {
+  // const isSocketConnected = useHookstate(gIsSocketConnected);
+  // const isWaConnected = useHookstate(gIsWaConnected);
+  // const isWeaConnectLoading = useHookstate(gIsweaConnectLoading);
+  // const isWeaInit = useHookstate(gIsWeaInit);
+  // const userId = useHookstate(gUserId);
+  const router = useRouter();
+  return (
+    <>
+      <Stack spacing={"lg"}>
+        <Container p={"xs"} maw={720} miw={360}>
+          <Stack spacing={"lg"}>
+            <Box bg={"gray"}>
+              <Center h={200}>
+                <Stack spacing={0} justify={"center"} align={"center"}>
+                  <IconPhoneCall size={96} color={"orange"} />
+                  <Text color={"white"} size={12}> 089697338821</Text>
+                  <Text color={"white"} size={12} >kurosakiblackangel@gmail.com</Text>
+                </Stack>
+              </Center>
+            </Box>
+            <SimpleGrid cols={listPid.length - 1}>
+              {listPid.map((v) => (
+                <Box key={v.pid}>
+                  <Paper shadow={"xs"}>
+                    <Box h={100} bg={"gray"}>
+                      <Center h={100}>
+                        <v.icon size={64} color={"cyan"} />
+                      </Center>
+                    </Box>
+                    <Box p={"xs"}>
+                      <Text>{_.upperCase(v.pid)}</Text>
+                      <Text size={12} c={"gray"}>
+                        {v.sub}
+                      </Text>
+                    </Box>
+                    <Group position="right">
+                      <ActionIcon onClick={() => router.push(v.pid)}>
+                        <MdArrowForwardIos />
+                      </ActionIcon>
+                    </Group>
+                  </Paper>
+                </Box>
+              ))}
+            </SimpleGrid>
+          </Stack>
+        </Container>
+      </Stack>
+      {/* <Stack>
+        {userId.value && <Text>${userId.value}</Text>}
+        {isSocketConnected.value && <Text>Socket Connected</Text>}
+        <GenerateNumber />
+      </Stack> */}
+    </>
+  );
+};
+
+const listTab = [
+  {
+    id: "1",
+    title: "Nomor Acak",
+    body: NomerAcak,
+  },
+  {
+    id: "2",
+    title: "Input Nomor",
+    body: Text,
+  },
+  {
+    id: "3",
+    title: "List Nomor",
+    body: Text,
+  },
+];
+
+const GenerateNumber = () => {
+  const [number, setNumber] = useState<string>();
+  const [listHasil, setListHasil] = useState<any[]>();
+  const userId = useHookstate(gUserId);
+  const [listResult2, setListResult] = useState<any[]>();
+  const router = useRouter();
+  const [initWea, setInitWea] = useState<boolean>();
+
+  // const [selectedTab, setSelectedTab] = useState<string>("1");
+  const selectTab = useHookstate(gSelectedTab);
+
+  useShallowEffect(() => {
+    // cekStatus();
+  });
+
+  const cekStatus = async () => {
+    console.log("check status ...");
+    showNotification({
+      title: "init wea",
+      message: "please wait",
+      disallowClose: true,
+      loading: true,
+    });
+
+    const res = await fetch("/api/status");
+    if (res.status == 200) {
+      console.log("check status success");
+      setInitWea(true);
+      showNotification({
+        title: "init wea success",
+        message: "success",
+      });
+      return true;
+    } else {
+      console.log("check status failed");
+      showNotification({
+        title: "error",
+        message: `wea server error ${res.status}}`,
+      });
+
+      return false;
+    }
+  };
+
+  const onGenerate = () => {
+    const num = "082191119960";
+    let realNum = Number(num.substring(1, num.length));
+    const hasil = [];
+    for (let i of new Array(50)) {
+      realNum++;
+      hasil.push(realNum);
+    }
+
+    setListHasil(hasil);
+  };
+
+  const sendWea = async () => {
+    showNotification({
+      autoClose: false,
+      title: "wait",
+      message: "wait",
+      loading: true,
+    });
+
+    if (!(await cekStatus())) {
+      return;
+    }
+
+    const data = await fetch("/api/send-data", {
+      method: "POST",
+      body: JSON.stringify({
+        id: userId.value,
+        data: listHasil,
+      }),
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+
+    if (data.status === 200) {
+      const d = await data.json();
+      setListResult(d);
+      cleanNotifications();
+      showNotification({
+        title: "success",
+        message: `get ${d.length} Number`,
+      });
+    } else {
+    }
+
+    // console.log(await data.json());
+  };
+
+  useCustomEventListener("result", (data: any[]) => {
+    // const d = [...listResult2!];
+    // d.push(data[0]);
+    // setListResult(d);
+  });
+
+  return (
+    <>
+      <ContainerLayout></ContainerLayout>
+      {/* <Stack>
+        <Group p={"xs"} bg={"gray"}>
+          <Button.Group>
+            {listTab.map((v) => (
+              <Box key={v.id}>
+                <Button
+                  variant="light"
+                  bg={selectTab.value == v.id ? "gray.2" : "white"}
+                  onClick={() => selectTab.set(v.id)}
+                >
+                  {v.title}
+                </Button>
+              </Box>
+            ))}
+          </Button.Group>
+        </Group>
+        <Box>
+          {listTab.map((v) => (
+            <Box hidden={v.id != selectTab.value} key={v.id}>
+              <v.body />
+            </Box>
+          ))}
+        </Box>
+        <Group>
+          <Button onClick={cekStatus}>Init Wea</Button>
+        </Group>
+        <Container>
+          <Stack spacing={"lg"}>
+            <TextInput
+              value={number}
+              onChange={(val) => setNumber(val.currentTarget.value)}
+              placeholder="masukkan nomer"
+            />
+            <Button onClick={onGenerate}>Generate</Button>
+            {listResult2 && (
+              <Group position="right">
+                <CopyButton
+                  value={listResult2.map((v) => "0" + v.number).join("\n")}
+                >
+                  {({ copied, copy }) => (
+                    <Button color={copied ? "gray" : "blue"} onClick={copy}>
+                      {copied ? "copied" : "copy"}
+                    </Button>
+                  )}
+                </CopyButton>
+              </Group>
+            )}
+            <SimpleGrid cols={4}>
+              {listHasil &&
+                listHasil.map((item) => (
+                  <Box key={item.toString()}>
+                    {listResult2 &&
+                    listResult2.map((v) => v.number).includes(item) ? (
+                      <Tooltip label={"clik untuk melihat"}>
+                        <Anchor
+                          href={`https://wa.me/62${item}`}
+                          target={"_blank"}
+                        >
+                          0{item}
+                        </Anchor>
+                      </Tooltip>
+                    ) : (
+                      <Text>0{item}</Text>
+                    )}
+                  </Box>
+                ))}
+
+            </SimpleGrid>
+            <Button onClick={sendWea}>Filter</Button>
+          </Stack>
+        </Container>
+      </Stack> */}
+    </>
+  );
+};
+
+function NomerAcak() {
+  return (
+    <>
+      <Text>Nomer Acak</Text>
+    </>
+  );
 }
