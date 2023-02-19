@@ -10,7 +10,7 @@ const cors = require("cors")
 const qrCodeTerminal = require('qrcode-terminal')
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
-const port = process.env.URL_HOST || 3003
+const port = process.env.URL_HOST || 3004
 
 const client = new Client({
     authStrategy: new LocalAuth({ clientId: "makuro_fren" }),
