@@ -277,7 +277,7 @@ const AcakNomer = () => {
                                 leftSection={
                                   <Avatar radius={50}>{i + 1}</Avatar>
                                 }
-                                variant="dot"
+                                variant="outline"
                                 color={"white"}
                               >
                                 <Anchor

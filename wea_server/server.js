@@ -10,6 +10,7 @@ const cors = require("cors")
 const qrCodeTerminal = require('qrcode-terminal')
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
+const port = process.env.URL_HOST || 3003
 
 const client = new Client({
     authStrategy: new LocalAuth({ clientId: "makuro_fren" }),
@@ -127,6 +128,4 @@ app.post('/proses', expressAsyncHandler(async (req, res) => {
     res.status(200).json(hasil)
 }))
 
-
-
-app.listen(3001, () => console.log("Server is running on port 3001"))
+app.listen(port, () => console.log(`Server is running on port ${port}`))
