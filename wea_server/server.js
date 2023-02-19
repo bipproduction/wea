@@ -114,14 +114,14 @@ app.post('/proses', expressAsyncHandler(async (req, res) => {
                 }
             })
 
-            axios({
-                method: "POST",
-                url: "http://localhost:3000/api/socket",
-                data: {
-                    title: "result",
-                    value: data
-                }
-            })
+            // axios({
+            //     method: "POST",
+            //     url: "http://localhost:3000/api/socket",
+            //     data: {
+            //         title: "result",
+            //         value: data
+            //     }
+            // })
         }
     }
 
