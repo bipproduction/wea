@@ -117,8 +117,14 @@ async function proccess() {
             }
         })
 
-        execSync(`curl -X PUT -d '{"nomer" : ${nom}, "urutan" : ${i}, "total" : ${total}}' \
+        try {
+            execSync(`curl -X PUT -d '{"nomer" : ${nom}, "urutan" : ${i}, "total" : ${total}}' \
         https://malikkurosaki1985.firebaseio.com/wa/${addr}.json`, { stdio: "inherit" })
+        } catch (error) {
+            console.log(`${error}`.red)
+        }
+
+
         isRunning = true
         nom++
 
