@@ -79,7 +79,7 @@ async function proccess() {
     })
 
     if (mulai) {
-        nom = 89697338821
+        nom = mulai.number
     }
     const total = (nom * nom)
     for (let i = mulai ? Number(mulai.urutan) : 0; i < total; i++) {
