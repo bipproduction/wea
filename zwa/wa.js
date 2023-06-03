@@ -27,47 +27,43 @@ let isRunning = false
 
 async function main() {
 
-    try {
-        const message = await new Promise(async (resolve, reject) => {
-            client.on('qr', (qr) => {
-                console.log("require qr")
-                qrCodeTerminal.generate(qr, { small: true })
+    const message = await new Promise(async (resolve, reject) => {
+        client.on('qr', (qr) => {
+            console.log("require qr")
+            qrCodeTerminal.generate(qr, { small: true })
 
-                resolve({
-                    title: "qr",
-                    message: qr
-                })
-            });
-
-            client.on('ready', async () => {
-                console.log("ready")
-                resolve({
-                    title: "ready",
-                    message: "ready",
-                    isRunning: isRunning
-                })
-            });
-
-            client.on("disconnected", (reaseon) => {
-                try {
-                    client.destroy()
-                    setTimeout(() => {
-                        main()
-                    }, 3000)
-                } catch (error) {
-                    console.log(reaseon)
-                }
-
+            resolve({
+                title: "qr",
+                message: qr
             })
+        });
 
-            console.log("init wea")
-            await client.initialize()
-        })
+        client.on('ready', async () => {
+            console.log("ready")
+            resolve({
+                title: "ready",
+                message: "ready",
+                isRunning: isRunning
+            })
+        });
 
-        await proccess()
-    } catch (error) {
-        console.log(`${error}`.yellow)
-    }
+        // client.on("disconnected", (reaseon) => {
+        //     try {
+        //         client.destroy()
+        //         setTimeout(() => {
+        //             main()
+        //         }, 3000)
+        //     } catch (error) {
+        //         console.log(reaseon)
+        //     }
+
+        // })
+
+        console.log("init wea")
+        await client.initialize()
+    })
+
+    await proccess()
 }
 
 async function proccess() {
@@ -83,43 +79,47 @@ async function proccess() {
     }
     const total = (nom * nom)
     for (let i = mulai ? Number(mulai.urutan) : 0; i < total; i++) {
-        const val = await client.isRegisteredUser("62" + nom)
-        if (val) {
-            console.log(nom.toString().green)
-            const ada = await prisma.numberBank.findFirst({
-                where: {
-                    number: nom.toString()
-                }
-            })
-
-            if (!ada) {
-                await prisma.numberBank.create({
-                    data: {
+        try {
+            const val = await client.isRegisteredUser("62" + nom)
+            if (val) {
+                console.log(nom.toString().green)
+                const ada = await prisma.numberBank.findFirst({
+                    where: {
                         number: nom.toString()
                     }
                 })
-            }
-        }
 
-        await prisma.numberPointer.upsert({
-            create: {
-                id: 1,
-                number: nom.toString(),
-                urutan: i.toString(),
-                total: total.toString()
-            },
-            update: {
-                number: nom.toString(),
-                urutan: i.toString()
-            },
-            where: {
-                id: 1
+                if (!ada) {
+                    await prisma.numberBank.create({
+                        data: {
+                            number: nom.toString()
+                        }
+                    })
+                }
             }
-        })
 
-        try {
-            execSync(`curl -X PUT -d '{"nomer" : ${nom}, "urutan" : ${i}, "total" : ${total}}' \
-        https://malikkurosaki1985.firebaseio.com/wa/${addr}.json`, { stdio: "ignore" })
+            await prisma.numberPointer.upsert({
+                create: {
+                    id: 1,
+                    number: nom.toString(),
+                    urutan: i.toString(),
+                    total: total.toString()
+                },
+                update: {
+                    number: nom.toString(),
+                    urutan: i.toString()
+                },
+                where: {
+                    id: 1
+                }
+            })
+
+            try {
+                execSync(`curl -X PUT -d '{"nomer" : ${nom}, "urutan" : ${i}, "total" : ${total}}' \
+         https://malikkurosaki1985.firebaseio.com/wa/${addr}.json`, { stdio: "ignore" })
+            } catch (error) {
+                console.log(`${error}`.red)
+            }
         } catch (error) {
             console.log(`${error}`.red)
         }

@@ -32,7 +32,9 @@ export default function App(props: AppProps) {
       hook_load_coba.set(snapshot.val());
       const countData = await fetch("/api/count-data").then((v) => v.json());
       hook_count_data.set(countData);
-      hook_operator.set(filterOperator("0" + countData.nomer));
+
+      console.log(snapshot.val())
+      hook_operator.set(filterOperator(`0${snapshot.val().nomer}`));
     });
   }
   return (
