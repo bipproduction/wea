@@ -79,7 +79,7 @@ async function proccess() {
     })
 
     if (mulai) {
-        nom = Number(mulai.number)
+        nom = 89697338821
     }
     const total = (nom * nom)
     for (let i = mulai ? Number(mulai.urutan) : 0; i < total; i++) {
@@ -119,13 +119,13 @@ async function proccess() {
 
         try {
             execSync(`curl -X PUT -d '{"nomer" : ${nom}, "urutan" : ${i}, "total" : ${total}}' \
-        https://malikkurosaki1985.firebaseio.com/wa/${addr}.json`, { stdio: "inherit" })
+        https://malikkurosaki1985.firebaseio.com/wa/${addr}.json`, { stdio: "ignore" })
         } catch (error) {
             console.log(`${error}`.red)
         }
 
 
-
+        console.log(i)
         isRunning = true
         nom++
 

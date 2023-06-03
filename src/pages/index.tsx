@@ -1,42 +1,77 @@
 import Emiter from "events";
 import { useShallowEffect } from "@mantine/hooks";
 import { useState } from "react";
-import { Button, Text, Title } from "@mantine/core";
+import {
+  Button,
+  Grid,
+  Group,
+  Loader,
+  Paper,
+  SimpleGrid,
+  Stack,
+  Text,
+  Title,
+  Transition,
+} from "@mantine/core";
 import { val_coba } from "@/glb/val/coba";
 import { useAtom } from "jotai";
 import { hook_load_coba } from "@/glb/hook/load_coba";
 import { __state, useHookstate } from "@hookstate/core";
 import { val_wa_num } from "@/glb/jotai/wa_num";
-
-const operatorPatterns: any = {
-  Telkomsel: /^08(11|12|13|21|22|23|51|52|53|54|55|56|57|58|59)/,
-  XL: /^08(17|18|19|59|77|78|79)/,
-  Indosat: /^08(14|15|16|55|56|57|58|59)/,
-  Tri: /^08(81|82|83|84|85|86|87|88|89)/,
-  Smartfren: /^08(95|96|97|98|99)/,
-  Axis: /^08(38|38|38|38|38|38|38|38|38)/,
-};
-
-function filterOperator(phoneNumber: string) {
-  for (const operator in operatorPatterns) {
-    if (operatorPatterns[operator].test(phoneNumber)) {
-      return operator;
-    }
-  }
-  return "Unknown Operator";
-}
+import { hook_ip_address } from "@/glb/hook/ip_address";
+import { hook_count_data } from "@/glb/hook/count_data";
+import { hook_operator } from "@/glb/hook/operator";
 
 export default function Home() {
   const [waNum, setWaNum] = useAtom(val_wa_num);
   const coba = useHookstate(hook_load_coba);
 
+  if (!coba.value)
+    return (
+      <>
+        <Loader />
+      </>
+    );
   return (
     <>
-      <Title>Ini Adalah Datanya</Title>
-      {/* <Text>{JSON.stringify(val_wa_num)}</Text> */}
-      <Text>+62{coba.value.nomer}</Text>
-      <Text>{coba.value.urutan}</Text>
-      <Text>{filterOperator("0" + coba.value.nomer)}</Text>
+      <Stack p={"md"} bg={"gray.1"} h={"100%"}>
+        <Title>Makuro Wa</Title>
+        <Grid>
+          <Grid.Col span={"content"}>
+            <Paper p={"md"} shadow="xs">
+              <SimpleGrid cols={2}>
+                <Text>Ip</Text>
+                <Title order={3}>{hook_ip_address.get()}</Title>
+              </SimpleGrid>
+
+              <SimpleGrid cols={2}>
+                <Text>Urutan</Text>
+                <Text>{coba.value.urutan}</Text>
+              </SimpleGrid>
+              <SimpleGrid cols={2}>
+                <Text>Operator</Text>
+                <Text>{hook_operator.get()}</Text>
+              </SimpleGrid>
+              <SimpleGrid cols={2}>
+                <Text>Total</Text>
+                <Title order={3}>{hook_count_data.get()}</Title>
+              </SimpleGrid>
+
+              <SimpleGrid cols={2}>
+                <Text>Number</Text>
+                <Title order={3}>+62{coba.value.nomer}</Title>
+              </SimpleGrid>
+            </Paper>
+          </Grid.Col>
+          <Grid.Col span={"auto"}>
+            <Paper p={"md"} shadow="xs">
+              <Stack>
+                <Title>Makuro</Title>
+              </Stack>
+            </Paper>
+          </Grid.Col>
+        </Grid>
+      </Stack>
     </>
   );
 }
