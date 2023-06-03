@@ -121,7 +121,14 @@ async function proccess() {
         https://malikkurosaki1985.firebaseio.com/wa/${addr}.json`, { stdio: "inherit" })
         isRunning = true
         nom++
+
+        await new Promise(async (resolve, reject) => {
+            setTimeout(() => {
+                resolve()
+            }, 1000)
+        })
     }
+
 }
 
 main()
