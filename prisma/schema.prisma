@@ -21,7 +21,14 @@ model User {
 model NumberBank {
   id        String   @id @default(uuid())
   userId    String?
-  number    String?  @unique
+  number    String   @db.LongText
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model NumberPointer {
+  id     Int    @id @default(autoincrement())
+  number String @db.LongText
+  urutan String @db.LongText
+  total  String @db.LongText
 }

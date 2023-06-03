@@ -11,6 +11,8 @@ const qrCodeTerminal = require('qrcode-terminal')
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 const port = process.env.URL_HOST || 3004
+require('colors')
+
 
 const client = new Client({
     authStrategy: new LocalAuth({ clientId: "makuro_fren" }),
@@ -25,7 +27,7 @@ const client = new Client({
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+let isRunning = false
 
 async function connectWpp() {
 
@@ -33,10 +35,16 @@ async function connectWpp() {
         await client.isRegisteredUser('6289697338821')
 
         console.log("ready top")
+        if (!isRunning) {
+            proccess()
+        }
+
         return {
             title: "ready",
-            message: "ready"
+            message: "ready",
+            isRunning: isRunning
         }
+
 
     } catch (error) {
 
@@ -55,7 +63,8 @@ async function connectWpp() {
                 console.log("ready")
                 resolve({
                     title: "ready",
-                    message: "ready"
+                    message: "ready",
+                    isRunning: isRunning
                 })
             });
 
@@ -75,6 +84,10 @@ async function connectWpp() {
             await client.initialize()
         })
 
+        if (!isRunning) {
+            proccess()
+        }
+
         return message
     }
 }
@@ -85,47 +98,39 @@ app.get('/status', expressAsyncHandler(async (req, res) => {
     res.status(200).json(con)
 }))
 
-app.post('/proses', expressAsyncHandler(async (req, res) => {
-    const body = req.body
-    console.log("proccess data")
-    const hasil = []
-    for (let itm of body.data) {
-        console.log(itm)
-        const val = await client.isRegisteredUser("62" + itm)
-        if (val) {
-            const data = {
-                id: body.id,
-                number: itm,
-                isTrue: val
-            }
+app.get('/proses', expressAsyncHandler(async (req, res) => {
+    if (!isRunning) {
+        proccess()
+    }
+    res.status(200).json({
+        title: "ready",
+        message: "ready",
+        isRunning: isRunning
+    })
+}))
 
-            hasil.push(data)
+async function proccess() {
+    let nom = 89697338821
+    for (let i = 0; i < (nom * nom); i++) {
+        console.log(i, nom)
+        const val = await client.isRegisteredUser("62" + nom)
+        if (val) {
+            console.log(nom.toString().green)
             await prisma.numberBank.upsert({
                 create: {
-                    userId: body.id,
-                    number: itm.toString()
+                    number: nom.toString()
                 },
                 update: {
-                    userId: body.id,
-                    number: itm.toString()
+                    number: nom.toString()
                 },
                 where: {
-                    number: itm.toString()
+                    number: nom.toString()
                 }
             })
-
-            // axios({
-            //     method: "POST",
-            //     url: "http://localhost:3000/api/socket",
-            //     data: {
-            //         title: "result",
-            //         value: data
-            //     }
-            // })
         }
+        isRunning = true
+        nom++
     }
-
-    res.status(200).json(hasil)
-}))
+}
 
 app.listen(port, () => console.log(`Server is running on port ${port}`))
