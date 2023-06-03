@@ -71,7 +71,7 @@ async function main() {
 }
 
 async function proccess() {
-    let nom = 80000000
+    let nom = 8110000000
     const mulai = await prisma.numberPointer.findUnique({
         where: {
             id: 1
@@ -125,14 +125,15 @@ async function proccess() {
         }
 
 
+
         isRunning = true
         nom++
 
-        await new Promise(async (resolve, reject) => {
-            setTimeout(() => {
-                resolve()
-            }, 1000)
-        })
+        // await new Promise(async (resolve, reject) => {
+        //     setTimeout(() => {
+        //         resolve()
+        //     }, 1000)
+        // })
     }
 
 }
