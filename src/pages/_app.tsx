@@ -1,6 +1,6 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
-import { MantineProvider } from "@mantine/core";
+import { LoadingOverlay, MantineProvider } from "@mantine/core";
 import { useShallowEffect } from "@mantine/hooks";
 import { db } from "@/util/firebase/firebase_init";
 import { onValue, ref } from "firebase/database";
@@ -12,6 +12,7 @@ import { hook_count_data } from "@/glb/hook/count_data";
 import { hook_operator } from "@/glb/hook/operator";
 import { filterOperator } from "@/util/fun/operator";
 import "../styles/globals.css";
+import { hook_loadiung } from "@/glb/hook/loading";
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
@@ -33,7 +34,7 @@ export default function App(props: AppProps) {
       const countData = await fetch("/api/count-data").then((v) => v.json());
       hook_count_data.set(countData);
 
-      console.log(snapshot.val())
+      // console.log(snapshot.val());
       hook_operator.set(filterOperator(`0${snapshot.val().nomer}`));
     });
   }
@@ -64,10 +65,11 @@ export default function App(props: AppProps) {
                     ? theme.colors.dark[8]
                     : theme.colors.gray[1],
               },
-            })
+            }),
           }}
         >
           <Component {...pageProps} />
+          <LoadingOverlay visible={hook_loadiung.get()} overlayBlur={2} />
         </MantineProvider>
       </Provider>
     </>

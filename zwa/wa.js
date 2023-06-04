@@ -11,8 +11,6 @@ const prisma = new PrismaClient()
 const ip = require('ip')
 const addr = _.kebabCase(ip.address())
 
-
-
 const client = new Client({
     authStrategy: new LocalAuth({ clientId: "makuro_wa" }),
     puppeteer: {

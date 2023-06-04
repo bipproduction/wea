@@ -21,6 +21,7 @@ import { val_wa_num } from "@/glb/jotai/wa_num";
 import { hook_ip_address } from "@/glb/hook/ip_address";
 import { hook_count_data } from "@/glb/hook/count_data";
 import { hook_operator } from "@/glb/hook/operator";
+import { ComTrueCaller } from "@/component/true_caller/true_caller";
 
 export default function Home() {
   const [waNum, setWaNum] = useAtom(val_wa_num);
@@ -66,7 +67,7 @@ export default function Home() {
           <Grid.Col span={"auto"}>
             <Paper p={"md"} shadow="xs">
               <Stack>
-                <Title>Makuro</Title>
+                <ComTrueCaller />
               </Stack>
             </Paper>
           </Grid.Col>

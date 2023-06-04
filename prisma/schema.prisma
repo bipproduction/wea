@@ -32,3 +32,9 @@ model NumberPointer {
   urutan String @db.LongText
   total  String @db.LongText
 }
+
+model TrueCaller {
+  id   Int   @id @default(1)
+  otp  Json?
+  user Json?
+}
