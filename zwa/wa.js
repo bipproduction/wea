@@ -65,7 +65,7 @@ async function main() {
 }
 
 async function proccess() {
-    let nom = 8110000000
+    let nom = 811100000
     const mulai = await prisma.numberPointer.findUnique({
         where: {
             id: 1
