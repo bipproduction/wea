@@ -88,6 +88,13 @@ async function proccess(socket) {
         // jika ada 
         if (val) {
 
+            const total = await prisma.numberBank.count()
+
+            socket.emit("info", {
+                title: "total",
+                data: total
+            })
+
             // kirim nomer yang ada ke client
             socket.emit("info", {
                 title: "true",
@@ -146,7 +153,7 @@ async function proccess(socket) {
     // rubah status ke true
     isRunning = true
     socket.emit("status", {
-        
+
     })
 
     return await proccess(socket)

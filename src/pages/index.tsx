@@ -1,6 +1,7 @@
 import { ComTrueCaller } from "@/component/true_caller/true_caller";
 import { hook_count_data } from "@/glb/hook/count_data";
 import { hook_cek } from "@/glb/hook/hook_cek";
+import { hook_total } from "@/glb/hook/hook_total";
 import { hook_true_number } from "@/glb/hook/hook_true_number";
 import { hook_ip_address } from "@/glb/hook/ip_address";
 import { hook_load_coba } from "@/glb/hook/load_coba";
@@ -29,13 +30,13 @@ export default function Home() {
   const coba = useHookstate(hook_load_coba);
   const cek = useHookstate(hook_cek);
   const trueNumber = useHookstate(hook_true_number);
-  const [ready, setReady] = useState(false)
+  const [ready, setReady] = useState(false);
 
   useShallowEffect(() => {
-    return setReady(true)
-  } , [])
+    return setReady(true);
+  }, []);
 
-  if(!ready) return <>wait ...</>
+  if (!ready) return <>wait ...</>;
   if (!coba.value)
     return (
       <>
@@ -65,7 +66,7 @@ export default function Home() {
               </SimpleGrid>
               <SimpleGrid cols={2}>
                 <Text>Total</Text>
-                <Title order={3}>{hook_count_data.get()}</Title>
+                <Title order={3}>{hook_total.value}</Title>
               </SimpleGrid>
 
               <SimpleGrid cols={2}>
@@ -85,8 +86,8 @@ export default function Home() {
                       {({ copied, copy }) => (
                         <ActionIcon
                           onClick={() => {
-                            copy()
-                            toast("copied")
+                            copy();
+                            toast("copied");
                           }}
                           color={copied ? "teal" : "blue"}
                         >
