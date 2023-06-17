@@ -31,6 +31,7 @@ if (argv.port) {
   fs.writeFileSync('port_socket.json', JSON.stringify(port_option))
 }
 
+
 if (argv.dev === true) {
   port_option.dev = true
   console.log("saved dev".green, "true")
