@@ -1,36 +1,3 @@
-2023/06/17-18:11:54.269 14803 Reusing MANIFEST /Users/bip/Documents/projects/tmp/wea-filter/myserver/.wwebjs_auth/session-makuro_wa/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2023/06/17-18:11:54.269 14803 Recovering log #64
-2023/06/17-18:11:54.316 14803 Reusing old log /Users/bip/Documents/projects/tmp/wea-filter/myserver/.wwebjs_auth/session-makuro_wa/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000064.log 
-2023/06/17-18:17:55.370 ae03 Level-0 table #70: started
-2023/06/17-18:17:55.420 ae03 Level-0 table #70: 1104406 bytes OK
-2023/06/17-18:17:55.465 ae03 Delete type=0 #64
-2023/06/17-18:17:57.414 14803 Compacting 1@1 + 2@2 files
-2023/06/17-18:17:57.532 14803 Generated table #71@1: 93956 keys, 2251369 bytes
-2023/06/17-18:17:57.568 14803 Generated table #72@1: 14023 keys, 696605 bytes
-2023/06/17-18:17:57.568 14803 Compacted 1@1 + 2@2 files => 2947974 bytes
-2023/06/17-18:17:57.604 14803 compacted to: files[ 0 0 2 0 0 0 0 ]
-2023/06/17-18:17:57.604 14803 Delete type=2 #70
-2023/06/17-18:17:57.604 14803 Delete type=2 #67
-2023/06/17-18:17:57.604 14803 Delete type=2 #66
-2023/06/17-18:27:17.668 14c03 Level-0 table #74: started
-2023/06/17-18:27:17.704 14c03 Level-0 table #74: 1110619 bytes OK
-2023/06/17-18:27:17.746 14c03 Delete type=0 #69
-2023/06/17-18:27:20.936 2a103 Compacting 1@1 + 2@2 files
-2023/06/17-18:27:21.028 2a103 Generated table #75@1: 94730 keys, 2246585 bytes
-2023/06/17-18:27:21.069 2a103 Generated table #76@1: 20251 keys, 851761 bytes
-2023/06/17-18:27:21.069 2a103 Compacted 1@1 + 2@2 files => 3098346 bytes
-2023/06/17-18:27:21.125 2a103 compacted to: files[ 0 0 2 0 0 0 0 ]
-2023/06/17-18:27:21.125 2a103 Delete type=2 #74
-2023/06/17-18:27:21.125 2a103 Delete type=2 #71
-2023/06/17-18:27:21.126 2a103 Delete type=2 #72
-2023/06/17-18:39:14.430 2a103 Level-0 table #78: started
-2023/06/17-18:39:14.466 2a103 Level-0 table #78: 1089166 bytes OK
-2023/06/17-18:39:14.506 2a103 Delete type=0 #73
-2023/06/17-18:39:17.146 14c03 Compacting 1@1 + 2@2 files
-2023/06/17-18:39:17.236 14c03 Generated table #79@1: 94513 keys, 2245368 bytes
-2023/06/17-18:39:17.278 14c03 Generated table #80@1: 27455 keys, 1016820 bytes
-2023/06/17-18:39:17.278 14c03 Compacted 1@1 + 2@2 files => 3262188 bytes
-2023/06/17-18:39:17.330 14c03 compacted to: files[ 0 0 2 0 0 0 0 ]
-2023/06/17-18:39:17.330 14c03 Delete type=2 #76
-2023/06/17-18:39:17.330 14c03 Delete type=2 #75
-2023/06/17-18:39:17.330 14c03 Delete type=2 #78
+2023/06/17-19:58:38.828 2a603 Reusing MANIFEST /Users/bip/Documents/projects/tmp/wea-filter/myserver/.wwebjs_auth/session-makuro_wa/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/06/17-19:58:38.828 2a603 Recovering log #77
+2023/06/17-19:58:38.885 2a603 Reusing old log /Users/bip/Documents/projects/tmp/wea-filter/myserver/.wwebjs_auth/session-makuro_wa/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000077.log 

@@ -76,6 +76,7 @@
     "truecallerjs": "^2.0.4",
     "typescript": "4.9.5",
     "uuid": "^9.0.0",
-    "whatsapp-web.js": "^1.19.4"
+    "whatsapp-web.js": "^1.19.4",
+    "yargs": "^17.7.2"
   }
 }
