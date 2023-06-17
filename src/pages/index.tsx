@@ -22,6 +22,7 @@ import {
 } from "@mantine/core";
 import { useDidUpdate, useShallowEffect } from "@mantine/hooks";
 import { useAtom } from "jotai";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { MdContentCopy, MdWhatsapp } from "react-icons/md";
 import toast from "react-simple-toasts";
@@ -32,6 +33,7 @@ export default function Home() {
   const cek = useHookstate(hook_cek);
   const trueNumber = useHookstate(hook_true_number);
   const [ready, setReady] = useState(false);
+  const router = useRouter();
 
   useShallowEffect(() => {
     return setReady(true);
@@ -99,7 +101,9 @@ export default function Home() {
                       </CopyButton>
                       <ActionIcon
                         color="green"
-                        onClick={() => window.open(`wa.me/62${waNum}`)}
+                        onClick={() =>
+                          router.push(`https://wa.me/62${trueNumber.value}`)
+                        }
                       >
                         <MdWhatsapp />
                       </ActionIcon>
