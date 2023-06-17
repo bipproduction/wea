@@ -1,0 +1,25 @@
+2023/06/17-17:51:43.952 10e03 Reusing MANIFEST /Users/bip/Documents/projects/tmp/wea-filter/myserver/.wwebjs_auth/session-makuro_wa/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/06/17-17:51:43.952 10e03 Recovering log #55
+2023/06/17-17:51:43.979 10e03 Reusing old log /Users/bip/Documents/projects/tmp/wea-filter/myserver/.wwebjs_auth/session-makuro_wa/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000055.log 
+2023/06/17-17:57:58.212 10e03 Level-0 table #61: started
+2023/06/17-17:57:58.262 10e03 Level-0 table #61: 1108388 bytes OK
+2023/06/17-17:57:58.334 10e03 Delete type=0 #55
+2023/06/17-17:58:00.722 b403 Compacting 1@1 + 2@2 files
+2023/06/17-17:58:00.807 b403 Generated table #62@1: 85978 keys, 2246262 bytes
+2023/06/17-17:58:00.833 b403 Generated table #63@1: 8247 keys, 362057 bytes
+2023/06/17-17:58:00.833 b403 Compacted 1@1 + 2@2 files => 2608319 bytes
+2023/06/17-17:58:00.889 b403 compacted to: files[ 0 0 2 0 0 0 0 ]
+2023/06/17-17:58:00.889 b403 Delete type=2 #61
+2023/06/17-17:58:00.889 b403 Delete type=2 #58
+2023/06/17-17:58:00.889 b403 Delete type=2 #57
+2023/06/17-18:07:02.322 16f03 Level-0 table #65: started
+2023/06/17-18:07:02.363 16f03 Level-0 table #65: 1117394 bytes OK
+2023/06/17-18:07:02.402 16f03 Delete type=0 #60
+2023/06/17-18:07:05.078 b403 Compacting 1@1 + 2@2 files
+2023/06/17-18:07:05.186 b403 Generated table #66@1: 89907 keys, 2247329 bytes
+2023/06/17-18:07:05.220 b403 Generated table #67@1: 11183 keys, 529500 bytes
+2023/06/17-18:07:05.220 b403 Compacted 1@1 + 2@2 files => 2776829 bytes
+2023/06/17-18:07:05.257 b403 compacted to: files[ 0 0 2 0 0 0 0 ]
+2023/06/17-18:07:05.257 b403 Delete type=2 #62
+2023/06/17-18:07:05.257 b403 Delete type=2 #63
+2023/06/17-18:07:05.258 b403 Delete type=2 #65

@@ -1,0 +1,11 @@
+
+```js
+
+// kirim 1
+socket.emit("isRegistered", val)
+
+// kirim2
+ socket.emit("urutan", i)
+```
+
+javascript , temukan path dalam socket.emit() , lalu masukkan ke array list
