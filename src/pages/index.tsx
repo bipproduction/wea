@@ -12,6 +12,7 @@ import {
   ActionIcon,
   CopyButton,
   Grid,
+  Group,
   Loader,
   Paper,
   SimpleGrid,
@@ -22,7 +23,7 @@ import {
 import { useDidUpdate, useShallowEffect } from "@mantine/hooks";
 import { useAtom } from "jotai";
 import { useState } from "react";
-import { MdContentCopy } from "react-icons/md";
+import { MdContentCopy, MdWhatsapp } from "react-icons/md";
 import toast from "react-simple-toasts";
 
 export default function Home() {
@@ -82,19 +83,27 @@ export default function Home() {
                     +62{trueNumber.value}
                   </Title>
                   {trueNumber.value && (
-                    <CopyButton value={trueNumber.value.toString()}>
-                      {({ copied, copy }) => (
-                        <ActionIcon
-                          onClick={() => {
-                            copy();
-                            toast("copied");
-                          }}
-                          color={copied ? "teal" : "blue"}
-                        >
-                          <MdContentCopy />
-                        </ActionIcon>
-                      )}
-                    </CopyButton>
+                    <Group align="center">
+                      <CopyButton value={trueNumber.value.toString()}>
+                        {({ copied, copy }) => (
+                          <ActionIcon
+                            onClick={() => {
+                              copy();
+                              toast("copied");
+                            }}
+                            color={copied ? "teal" : "blue"}
+                          >
+                            <MdContentCopy />
+                          </ActionIcon>
+                        )}
+                      </CopyButton>
+                      <ActionIcon
+                        color="green"
+                        onClick={() => window.open(`wa.me/62${waNum}`)}
+                      >
+                        <MdWhatsapp />
+                      </ActionIcon>
+                    </Group>
                   )}
                 </Stack>
               </SimpleGrid>
