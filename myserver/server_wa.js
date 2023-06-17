@@ -10,6 +10,7 @@ const addr = _.kebabCase(ip.address())
 const fs = require('fs')
 
 
+
 // init client whatsappjs
 const client = new Client({
     authStrategy: new LocalAuth({ clientId: "makuro_wa" }),
