@@ -20,6 +20,8 @@ import { hook_true_number } from "@/glb/hook/hook_true_number";
 import toast from "react-simple-toasts";
 import port_option from "../../myserver/port_socket.json";
 import { hook_total } from "@/glb/hook/hook_total";
+import "animate.css";
+import { hook_qr } from "@/glb/hook/hook_qr";
 
 const socket = io(
   port_option.dev ? `http://localhost:${port_option.port}` : port_option.host
@@ -41,12 +43,16 @@ socket.on("info", (data: { title: string; data: any }) => {
   }
 
   if (data.title === "true") {
-    toast(`find ${data.data}`);
+    // toast(`find ${data.data}`);
     hook_true_number.set(data.data);
   }
 
   if (data.title === "total") {
     hook_total.set(data.data);
+  }
+
+  if (data.title === "qr") {
+    hook_qr.set(data.data);
   }
 });
 
@@ -77,7 +83,7 @@ export default function App(props: AppProps) {
   return (
     <>
       <Head>
-        <title>Page title</title>
+        <title>Makuro Wa</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"

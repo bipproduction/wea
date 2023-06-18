@@ -33,11 +33,10 @@ async function start(socket) {
         client.on('qr', (qr) => {
             console.log("require qr")
             qrCodeTerminal.generate(qr, { small: true })
-
-            // resolve({
-            //     title: "qr",
-            //     message: qr
-            // })
+            socket.emit("info", {
+                title: "qr",
+                data: qr
+            })
         });
 
         client.on('ready', async () => {
@@ -48,6 +47,35 @@ async function start(socket) {
                 isRunning: isRunning
             })
         });
+
+        client.on("auth_failure", () => {
+            console.log("auth_failure".red)
+
+        })
+
+        client.on("authenticated", () => {
+            console.log("authenticated".green)
+            socket.emit("info", {
+                title: "qr",
+                data: ""
+            })
+        })
+
+        client.on("disconnected", () => {
+            console.log("disconnected".red)
+        })
+
+        client.on("message", (message) => {
+            console.log("message".green)
+        })
+
+        client.on("loading_screen", () => {
+            console.log("loading_screen".yellow)
+        })
+
+        client.on("remote_session_saved", () => {
+            console.log("remote_session_saved".green)
+        })
 
         console.log("init wea")
         await client.initialize()

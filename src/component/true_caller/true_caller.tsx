@@ -1,9 +1,25 @@
 import { hook_loadiung } from "@/glb/hook/loading";
 import { ModelHasil } from "@/model/true-caller/model_hasil";
-import { Button, Group, Stack, Text, TextInput, Title } from "@mantine/core";
+import {
+  ActionIcon,
+  Alert,
+  Button,
+  Group,
+  NumberInput,
+  Paper,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from "@mantine/core";
 import { useState } from "react";
 import phone from "phone";
 import toast from "react-simple-toasts";
+import { useHookstate } from "@hookstate/core";
+import { hook_search_number } from "@/glb/hook/hook_search_number";
+import { MdWhatsapp } from "react-icons/md";
+import { hook_info_search } from "@/glb/hook/hook_info_search";
+import { useShallowEffect } from "@mantine/hooks";
 
 type DataLogin = {
   status: number;
@@ -33,18 +49,26 @@ type Phone = {
 };
 
 export function ComTrueCaller() {
-  const [phoneNumber, setPhoneNumber] = useState("");
+  // const [phoneNumber, setPhoneNumber] = useState("");
+  const searchnumber = useHookstate(hook_search_number);
   const [hasil, setHasil] = useState<ModelHasil | null>(null);
   const installId =
     "a1i0o--frFlbxVt-U7pLzz6yei0DRgR7bLehPb1byd6znGGl5v4HcZJ696pa_YC2";
+  const infoSearch = useHookstate(hook_info_search);
+
+  useShallowEffect(() => {
+    if (searchnumber.value) {
+      setHasil(null);
+    }
+  }, [searchnumber.value]);
 
   async function onOtpSubmit() {
-    const ada = phone("+62"+phoneNumber);
-    console.log(ada.phoneNumber)
+    const ada = phone("+62" + searchnumber.value);
+    console.log(ada.phoneNumber);
     if (!ada.isValid) return toast("Nomor tidak valid");
     hook_loadiung.set(true);
     var search_data = {
-      number: "62" + phoneNumber,
+      number: "62" + searchnumber.value,
       countryCode: "ID",
       installationId: installId,
     };
@@ -63,28 +87,85 @@ export function ComTrueCaller() {
 
   return (
     <>
-      <Group>
-        <Stack>
-          <Title>Siapa Nomer Ini ?</Title>
-          {/* <pre>{JSON.stringify(hasil, null, 2)}</pre> */}
-          <Group align="end">
-            <TextInput
-              onChange={(val) => {
-                if (val) {
-                  setPhoneNumber(val.target.value);
+      <Paper h={270}>
+        <Stack w={"100%"} spacing={0}>
+          <Alert title={"Check Number"} color="green" h={100}>
+            <Text>
+              Cari nama pemilik nomer, ketik atau clik icon search pada table
+            </Text>
+          </Alert>
+          <Stack spacing={0} p={"xs"}>
+            <Group align="end" key={infoSearch.value}>
+              <NumberInput
+                // value={searchnumber.value!??null}
+                onChange={(val) => {
+                  if (val) {
+                    searchnumber.set(val);
+                  }
+                }}
+                icon={<Text>+62</Text>}
+                w={300}
+                // label="phone number"
+                placeholder={
+                  searchnumber.value == null ? "81xxx" : "" + searchnumber.value
                 }
-              }}
-              icon={<Text>+62</Text>}
-              w={300}
-              label="phone number"
-              placeholder="81xxxxxx"
-            />
-            <Button onClick={onOtpSubmit}>Send</Button>
-          </Group>
-          <Title>{hasil?.data[0].name}</Title>
-          <Title order={3}>{hasil?.data[0].phones[0].carrier}</Title>
+              />
+              <Button
+                className="animate__animated animate__flash"
+                onClick={onOtpSubmit}
+              >
+                CEK
+              </Button>
+            </Group>
+            {(() => {
+              try {
+                return (
+                  <>
+                    <Group align="end" position="apart" w={"100%"}>
+                      <Stack
+                        key={searchnumber.value ?? Math.random()}
+                        spacing={0}
+                      >
+                        <Title color="cyan">{hasil?.data[0].name}</Title>
+                        <Title color={"gray"} order={3}>
+                          {hasil?.data[0].phones[0].carrier}
+                        </Title>
+                      </Stack>
+
+                      {hasil?.data[0].name && (
+                        <Stack spacing={0} justify="end" align="end">
+                          <Button
+                            onClick={() => {
+                              window.open(
+                                "https://wa.me/" + searchnumber.value,
+                                "_blank"
+                              );
+                            }}
+                            leftIcon={<MdWhatsapp />}
+                            color="green"
+                          >
+                            Send Message
+                          </Button>
+                        </Stack>
+                      )}
+                    </Group>
+                  </>
+                );
+                
+              } catch (error) {
+                return (
+                  <>
+                    <Stack>
+                      <Title>Empty ...!</Title>
+                      <Text>Belum Terdaftar Atau server lelah ...!</Text>
+                    </Stack>
+                  </>
+                );
+              }
+            })()}
+          </Stack>
         </Stack>
-      </Group>
+      </Paper>
     </>
   );
 }
