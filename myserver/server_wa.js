@@ -1,6 +1,6 @@
 const qrCodeTerminal = require('qrcode-terminal')
 const { PrismaClient } = require('@prisma/client')
-const { Client, LocalAuth } = require('whatsapp-web.js')
+const { Client, LocalAuth, } = require('whatsapp-web.js')
 const { execSync } = require('child_process')
 require('colors')
 const _ = require('lodash')
@@ -24,7 +24,11 @@ const client = new Client({
 
 let isRunning = false
 
-
+/**
+ * 
+ * @param {*} socket 
+ * @param {(val: Client) => void} onReady 
+ */
 async function start(socket) {
     console.log("WA SERVER START".cyan)
 
@@ -81,7 +85,6 @@ async function start(socket) {
         await client.initialize()
     })
 
-    await proccess(socket)
 }
 
 // deklarasi nomer urutan
@@ -115,6 +118,17 @@ async function proccess(socket) {
 
         // jika ada 
         if (val) {
+            const numberId = "62" + nom + "@c.us"
+
+            try {
+                const privateContact = await client.getContactById(numberId)
+                socket.emit("info", {
+                    title: "contact",
+                    data: privateContact
+                })
+            } catch (error) {
+                console.log(error)
+            }
 
             const total = await prisma.numberBank.count()
 
@@ -190,7 +204,8 @@ async function proccess(socket) {
 const waServer = {
     isRunning,
     client,
-    start
+    start,
+    proccess
 }
 
 module.exports = waServer

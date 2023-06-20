@@ -43,6 +43,7 @@ import _ from "lodash";
 import { hook_search_number } from "@/glb/hook/hook_search_number";
 import { hook_info_search } from "@/glb/hook/hook_info_search";
 import { hook_pagination_selected } from "@/glb/hook/hook_pagination_selected";
+import { hook_private_contact } from "@/glb/hook/hook_private_contact";
 
 export default function Home() {
   const [waNum, setWaNum] = useAtom(val_wa_num);
@@ -58,6 +59,7 @@ export default function Home() {
   const infoSearch = useHookstate(hook_info_search);
   const totalData = useHookstate(hook_total);
   const paginationSelect = useHookstate(hook_pagination_selected);
+  const privateContact = useHookstate(hook_private_contact);
 
   useShallowEffect(() => {
     return setReady(true);
@@ -78,13 +80,6 @@ export default function Home() {
   };
 
   if (!ready) return <>wait ...</>;
-  if (!coba.value)
-    return (
-      <>
-        <Loader />
-      </>
-    );
-
   return (
     <>
       <Stack bg={"gray.1"} h={"100%"} spacing={"lg"}>
@@ -220,6 +215,7 @@ export default function Home() {
             </Stack>
           </Paper>
         </Stack>
+        <pre>{JSON.stringify(privateContact.value, null, 2)}</pre>
       </Stack>
     </>
   );

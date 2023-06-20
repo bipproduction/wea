@@ -22,6 +22,7 @@ import port_option from "../../myserver/port_socket.json";
 import { hook_total } from "@/glb/hook/hook_total";
 import "animate.css";
 import { hook_qr } from "@/glb/hook/hook_qr";
+import { hook_private_contact } from "@/glb/hook/hook_private_contact";
 
 const socket = io(
   port_option.dev ? `http://localhost:${port_option.port}` : port_option.host
@@ -38,21 +39,26 @@ socket.on("disconnect", () => {
 socket.on("info", (data: { title: string; data: any }) => {
   if (!data) return;
 
-  if (data.title === "cek") {
-    hook_cek.set(data.data);
-  }
+  switch (data.title) {
+    case "cek":
+      hook_cek.set(data.data);
+      break;
+    case "true":
+      hook_true_number.set(data.data);
+      break;
+    case "total":
+      hook_total.set(data.data);
+      break;
 
-  if (data.title === "true") {
-    // toast(`find ${data.data}`);
-    hook_true_number.set(data.data);
-  }
+    case "qr":
+      hook_qr.set(data.data);
+      break;
 
-  if (data.title === "total") {
-    hook_total.set(data.data);
-  }
-
-  if (data.title === "qr") {
-    hook_qr.set(data.data);
+    case "contact":
+      hook_private_contact.set(data.data);
+      break;
+    default:
+      break;
   }
 });
 
