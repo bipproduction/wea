@@ -37,3 +37,5 @@ next-env.d.ts
 
 # wea server
 /myserver/.wwebjs_auth
+/myserver/tokens
+
