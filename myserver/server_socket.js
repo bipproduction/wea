@@ -2,12 +2,12 @@ const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
 const cors = require('cors');
-
 const yargs = require('yargs')
 const port_option = require('./port_socket.json')
 const fs = require('fs');
-
 const { venomClient } = require('./venom_server')
+const { wa_filter } = require('./wa_filter')
+require('colors')
 
 const argv = yargs(process.argv.slice(2))
   .usage('Usage: $0 [options]')
@@ -52,12 +52,16 @@ const io = socketIO(server, {
   },
 });
 
+var mySocket;
+
 io.on('connection', (socket) => {
   console.log('a user connected');
 
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
+
+  mySocket = socket;
 });
 
 app.use(cors());
@@ -154,7 +158,24 @@ app.get("/is-login", async (req, res) => {
 })
 
 
+var sudahJalan = false;
+app.get("/filter", async (req, res) => {
 
+  if (io == null || io == undefined) return res.end("socket error")
+  if (!sudahJalan) {
+    wa_filter(venomClient, io)
+    sudahJalan = true
+    return res.json({
+      success: true,
+      data: "start"
+    })
+  }
+
+  return res.json({
+    success: true,
+    data: "running"
+  })
+})
 
 server.listen(port_option.port, () => {
   console.log(`listening on *:${port_option.port}`);
